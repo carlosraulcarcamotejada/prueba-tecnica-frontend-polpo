@@ -1,29 +1,11 @@
-import { FC, useEffect, useState } from "react";
-import { getJoke } from "./helpers/getJoke";
-import { IResFact } from "./types";
-import { getCategoriesRes } from "./helpers/getCategories";
+import { FC, useState } from "react";
 import { Listbox } from "./components";
+import { useFetchJokes } from "./hooks/useFetchJokes";
 
 const App: FC = (): JSX.Element => {
-  const [fact, setFact] = useState<IResFact>();
   const [selectedCategory, setselectedCategory] = useState<string>("");
-  const [categories, setcategories] = useState<string[]>([]);
 
-  const getNewFact = async () => {
-    const newFact = await getJoke(selectedCategory);
-    setFact(newFact);
-  };
-
-  const getCategories = async () => {
-    const categories = await getCategoriesRes();
-    setcategories(categories);
-  };
-
-  //UseEffect to load the first joke and the categories
-  useEffect(() => {
-
-    getCategories();
-  }, []);
+  const { joke, getNewJoke } = useFetchJokes(selectedCategory);
 
   return (
     <main className="h-screen bg-gray-50 w-full">
@@ -33,22 +15,22 @@ const App: FC = (): JSX.Element => {
 
       <div className="p-12 flex flex-col justify-center items-center gap-y-16">
         <Listbox
-          categories={categories}
           selectedCategory={selectedCategory}
           setselectedCategory={setselectedCategory}
         />
 
         <button
+          disabled={selectedCategory.length === 0}
           type="button"
-          className="py-2 active:scale-95 transition active:bg-indigo-600 hover:shadow-md active:shadow-md hover:bg-indigo-600 px-4 rounded-md bg-indigo-500 text-white font-semibold"
-          onClick={getNewFact}
+          className="py-2 disabled:opacity-70 disabled:shadow-none disabled:active:scale-100 disabled:hover:bg-indigo-500  active:scale-95 transition active:bg-indigo-600 hover:shadow-md active:shadow-md hover:bg-indigo-600 px-4 rounded-md bg-indigo-500 text-white font-semibold"
+          onClick={getNewJoke}
         >
-          New joke
+          New random joke
         </button>
 
-        {fact?.value && (
+        {joke?.value && (
           <p className="w-full border bg-white border-gray-200 shadow-md h-auto p-2 rounded-lg text-lg text-green-600 ">
-            {fact?.value}
+            {joke?.value}
           </p>
         )}
       </div>

@@ -1,21 +1,28 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useState, useEffect } from "react";
 import { Listbox as ListboxHUI, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { getCategoriesRes } from "../helpers/getCategories";
 
 interface IListbox {
-  categories: string[];
   selectedCategory: string;
   setselectedCategory: (selectedCategory: string) => void;
 }
 
-
-
-
 const Listbox: FC<IListbox> = ({
-  categories,
   selectedCategory,
   setselectedCategory,
 }): JSX.Element => {
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const getCategories = async () => {
+    const categories = await getCategoriesRes();
+    setCategories(categories);
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div className="top-16 w-72">
       <h3 className="text-center font-bold">Select a category</h3>
@@ -36,7 +43,7 @@ const Listbox: FC<IListbox> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <ListboxHUI.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ListboxHUI.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
               {categories.map((category) => (
                 <ListboxHUI.Option
                   key={category}
@@ -47,7 +54,7 @@ const Listbox: FC<IListbox> = ({
                   }
                   value={category}
                 >
-                  {({selected}) => (
+                  {({ selected }) => (
                     <>
                       <span
                         className={`block truncate ${
