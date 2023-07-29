@@ -1,40 +1,57 @@
 import { FC, useState } from "react";
-import { Listbox } from "./components";
+import {
+  Button,
+  Container,
+  Footer,
+  Header,
+  Jokes,
+  Listbox,
+  Main,
+  Spinner,
+} from "./components";
 import { useFetchJokes } from "./hooks/useFetchJokes";
 
 const App: FC = (): JSX.Element => {
-  const [selectedCategory, setselectedCategory] = useState<string>("");
+  //maneja el estado de la cateforía seleccionada
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const { joke, getNewJoke } = useFetchJokes(selectedCategory);
+  //useFetchJokes se encarga de centralizar la lógica de las peticiones
+  const { joke, getNewJoke, isLoading } = useFetchJokes(selectedCategory);
 
   return (
-    <main className="h-screen bg-gray-50 w-full">
-      <header className="text-3xl text-white w-full text-center py-4 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 shadow-md">
-        <div>Chuck Norris Jokes</div>
-      </header>
+    <>
+      {/* Main Component, encargado de servir de contendor de toda la App */}
+      <Main>
+        {/* Header Component, encargado de mostrar el título de la App */}
+        <Header title="Chuck Norris Jokes" />
 
-      <div className="p-12 flex flex-col justify-center items-center gap-y-16">
-        <Listbox
-          selectedCategory={selectedCategory}
-          setselectedCategory={setselectedCategory}
-        />
-
-        <button
-          disabled={selectedCategory.length === 0}
-          type="button"
-          className="py-2 disabled:opacity-70 disabled:shadow-none disabled:active:scale-100 disabled:hover:bg-indigo-500  active:scale-95 transition active:bg-indigo-600 hover:shadow-md active:shadow-md hover:bg-indigo-600 px-4 rounded-md bg-indigo-500 text-white font-semibold"
-          onClick={getNewJoke}
-        >
-          New random joke
-        </button>
-
-        {joke?.value && (
-          <p className="w-full border bg-white border-gray-200 shadow-md h-auto p-2 rounded-lg text-lg text-green-600 ">
-            {joke?.value}
-          </p>
-        )}
-      </div>
-    </main>
+        {/* Container Component, encargado de encapsular otros componentes */}
+        <Container>
+          {/* Listbox Component, encargado de mostrar y seleccionar las categorias */}
+          <Listbox
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            title="Select a category"
+          />
+          {/* Listbox Component, encargado de generar la siguiente ramdon joke */}
+          <Button
+            disabled={selectedCategory.length === 0}
+            label="New random joke"
+            onClick={getNewJoke}
+          />
+          {/* 
+          Cuando "isLoading" is true se encarga de mostrar un Spinner component. 
+          cuando deja cargar y "isLoading" se vuelve false muestra la joke. 
+          */}
+          {isLoading && selectedCategory.length > 0 ? (
+            <Spinner size={50} />
+          ) : (
+            <Jokes joke={joke?.value} />
+          )}
+        </Container>
+      </Main>
+      <Footer />
+    </>
   );
 };
 
