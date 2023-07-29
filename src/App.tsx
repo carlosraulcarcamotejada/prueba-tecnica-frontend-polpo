@@ -11,7 +11,7 @@ import {
 import { useFetchJokes } from "./hooks/useFetchJokes";
 
 const App: FC = (): JSX.Element => {
-  //maneja el estado de la cateforía seleccionada
+  //maneja el estado de la categoría seleccionada
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   //useFetchJokes se encarga de centralizar la lógica de las peticiones
