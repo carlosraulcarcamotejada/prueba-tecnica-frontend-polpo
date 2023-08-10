@@ -6,7 +6,18 @@ interface IMain {
 
 const Main: FC<IMain> = ({ children }): JSX.Element => {
   return (
-    <main className="min-h-[94vh] md:h-[96vh] bg-gray-100 dark:bg-black  w-full">
+    <main 
+        className="
+                  bg-gradient-to-b
+                  from-orange-100 
+                  min-h-[94vh] 
+                  pt-24 
+                  to-red-50
+                  via-amber-100
+                  w-full
+                  md:h-[96vh]
+                  "
+          >
       {children}
     </main>
   );

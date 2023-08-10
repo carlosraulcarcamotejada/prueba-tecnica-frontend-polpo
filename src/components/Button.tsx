@@ -10,24 +10,30 @@ const Button: FC<IButton> = ({ disabled, label, onClick }): JSX.Element => {
   return (
     <button
       className="
-                bg-indigo-600 
+                bg-orange-500 
+                cursor-pointer
                 font-semibold
                 h-10 
                 px-4 
                 py-2 
                 rounded-md
-                text-white 
-                w-44
+                select-none
+                shadow-md
                 transition
-              active:bg-indigo-600 
+                w-44
+              text-white
                 active:scale-95 
-                active:shadow-md
+                active:shadow-lg
+              active:bg-orange-600 
                 disabled:active:scale-100
-                disabled:opacity-70 
+                disabled:cursor-not-allowed
                 disabled:shadow-none 
-              disabled:hover:bg-indigo-500  
-                hover:shadow-md 
-              hover:bg-indigo-700 
+              disabled:bg-orange-500/70
+              disabled:hover:bg-orange-500/70
+                hover:shadow-lg
+                hover:shadow-orange-300/50
+              hover:bg-orange-600 
+
                 "
       onClick={onClick}
       disabled={disabled}

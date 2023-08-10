@@ -13,6 +13,7 @@ const Listbox: FC<IListbox> = ({
   selectedCategory,
   setSelectedCategory,
   title,
+
 }): JSX.Element => {
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -26,15 +27,15 @@ const Listbox: FC<IListbox> = ({
   }, []);
 
   return (
-    <div className="top-16 w-72">
-      <h3 className="text-center font-bold">{title}</h3>
-      <ListboxHUI value={selectedCategory} onChange={setSelectedCategory}>
+    <div className="top-16 w-72 font-carter select-none">
+      <h3 className="text-center text-amber-900 mb-6 ">{title}</h3>
+      <ListboxHUI   value={selectedCategory} onChange={setSelectedCategory}>
         <div className="relative mt-1">
-          <ListboxHUI.Button className="relative w-full cursor-default h-10 rounded-lg bg-white dark:bg-neutral-900 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-            <span className="block truncate dark:text-neutral-200">{selectedCategory}</span>
+          <ListboxHUI.Button className="relative disabled:bg-white/70 disabled:text-opacity-70 w-full cursor-default h-10 rounded-lg bg-white  py-2 pl-3 pr-10 text-left shadow-md focus:outline-none   sm:text-sm">
+            <span className="block truncate text-amber-950">{selectedCategory}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon
-                className="h-5 w-5 text-gray-400 dark:text-neutral-200"
+                className="h-5 w-5 text-gray-400 "
                 aria-hidden="true"
               />
             </span>
@@ -45,13 +46,13 @@ const Listbox: FC<IListbox> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <ListboxHUI.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-neutral-900 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
+            <ListboxHUI.Options style={{outline: "none"}} className="absolute mt-2 max-h-60 w-full overflow-auto rounded-md  backdrop-blur-xl  bg-white/30   text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
               {categories.map((category) => (
                 <ListboxHUI.Option
                   key={category}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? "bg-amber-100 dark:bg-amber-300 text-amber-900" : "text-gray-900 dark:text-neutral-300"
+                    `relative cursor-default select-none border-b border-gray-400/30  py-2 pl-10 pr-4 ${
+                      active ? "bg-orange-400/30  text-orange-800 " : "text-amber-950 "
                     }`
                   }
                   value={category}

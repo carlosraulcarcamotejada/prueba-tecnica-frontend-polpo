@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { getJoke } from "../helpers/getJoke";
-import { IResFact } from "../types";
+import { IResJoke } from "../types";
 
 export const useFetchJokes = (selectedCategory: string) => {
-  const [joke, setJoke] = useState<IResFact>();
-  const [isLoading, setIsLoading] = useState( true );
+  const [joke, setJoke] = useState<IResJoke>({} as IResJoke);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getNewJoke = async () => {
     setIsLoading(true);

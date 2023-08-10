@@ -1,4 +1,4 @@
-export interface IResFact {
+export type IResJoke = {
     categories: any[];
     created_at: Date;
     icon_url:   string;
